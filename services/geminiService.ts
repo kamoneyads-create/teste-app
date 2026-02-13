@@ -3,7 +3,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { Transaction, AIInsight } from "../types";
 
 export const analyzeSpending = async (transactions: Transaction[]): Promise<AIInsight[]> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' });
   
   const transactionsSummary = transactions.map(t => ({
     type: t.type,
@@ -12,7 +12,7 @@ export const analyzeSpending = async (transactions: Transaction[]): Promise<AIIn
     description: t.description
   }));
 
-  const prompt = `Analise o seguinte histórico de transações financeiras e forneça 3 dicas/insights acionáveis e estratégicos para ajudar o usuário a economizar ou gerenciar melhor o dinheiro. Retorne exatamente 3 itens.
+  const prompt = `Analise o seguinte histÃ³rico de transaÃ§Ãµes financeiras e forneÃ§a 3 dicas/insights acionÃ¡veis e estratÃ©gicos para ajudar o usuÃ¡rio a economizar ou gerenciar melhor o dinheiro. Retorne exatamente 3 itens.
   
   Dados: ${JSON.stringify(transactionsSummary)}`;
 
@@ -27,9 +27,9 @@ export const analyzeSpending = async (transactions: Transaction[]): Promise<AIIn
           items: {
             type: Type.OBJECT,
             properties: {
-              title: { type: Type.STRING, description: 'Um título curto e chamativo para o insight' },
-              description: { type: Type.STRING, description: 'Uma explicação detalhada e útil' },
-              priority: { type: Type.STRING, enum: ['low', 'medium', 'high'], description: 'Nível de urgência/impacto' }
+              title: { type: Type.STRING, description: 'Um tÃ­tulo curto e chamativo para o insight' },
+              description: { type: Type.STRING, description: 'Uma explicaÃ§Ã£o detalhada e Ãºtil' },
+              priority: { type: Type.STRING, enum: ['low', 'medium', 'high'], description: 'NÃ­vel de urgÃªncia/impacto' }
             },
             required: ['title', 'description', 'priority']
           }
@@ -42,13 +42,13 @@ export const analyzeSpending = async (transactions: Transaction[]): Promise<AIIn
     console.error("Erro ao analisar com Gemini:", error);
     return [
       {
-        title: "Dica de Reserva de Emergência",
+        title: "Dica de Reserva de EmergÃªncia",
         description: "Com base no seu perfil, recomendamos criar uma reserva equivalente a 6 meses de gastos essenciais.",
         priority: "high"
       },
       {
         title: "Analise seus gastos em Lazer",
-        description: "Parece que há espaço para otimização em assinaturas ou saídas frequentes.",
+        description: "Parece que hÃ¡ espaÃ§o para otimizaÃ§Ã£o em assinaturas ou saÃ­das frequentes.",
         priority: "medium"
       }
     ];
