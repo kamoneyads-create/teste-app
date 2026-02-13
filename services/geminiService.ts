@@ -12,7 +12,7 @@ export const analyzeSpending = async (transactions: Transaction[]): Promise<AIIn
     description: t.description
   }));
 
-  const prompt = `Analise o seguinte histÃ³rico de transaÃ§Ãµes financeiras e forneÃ§a 3 dicas/insights acionÃ¡veis e estratÃ©gicos para ajudar o usuÃ¡rio a economizar ou gerenciar melhor o dinheiro. Retorne exatamente 3 itens.
+  const prompt = `Analise o seguinte histÃÂ³rico de transaÃÂ§ÃÂµes financeiras e forneÃÂ§a 3 dicas/insights acionÃÂ¡veis e estratÃÂ©gicos para ajudar o usuÃÂ¡rio a economizar ou gerenciar melhor o dinheiro. Retorne exatamente 3 itens.
   
   Dados: ${JSON.stringify(transactionsSummary)}`;
 
@@ -27,9 +27,9 @@ export const analyzeSpending = async (transactions: Transaction[]): Promise<AIIn
           items: {
             type: Type.OBJECT,
             properties: {
-              title: { type: Type.STRING, description: 'Um tÃ­tulo curto e chamativo para o insight' },
-              description: { type: Type.STRING, description: 'Uma explicaÃ§Ã£o detalhada e Ãºtil' },
-              priority: { type: Type.STRING, enum: ['low', 'medium', 'high'], description: 'NÃ­vel de urgÃªncia/impacto' }
+              title: { type: Type.STRING, description: 'Um tÃÂ­tulo curto e chamativo para o insight' },
+              description: { type: Type.STRING, description: 'Uma explicaÃÂ§ÃÂ£o detalhada e ÃÂºtil' },
+              priority: { type: Type.STRING, enum: ['low', 'medium', 'high'], description: 'NÃÂ­vel de urgÃÂªncia/impacto' }
             },
             required: ['title', 'description', 'priority']
           }
@@ -42,13 +42,13 @@ export const analyzeSpending = async (transactions: Transaction[]): Promise<AIIn
     console.error("Erro ao analisar com Gemini:", error);
     return [
       {
-        title: "Dica de Reserva de EmergÃªncia",
+        title: "Dica de Reserva de EmergÃÂªncia",
         description: "Com base no seu perfil, recomendamos criar uma reserva equivalente a 6 meses de gastos essenciais.",
         priority: "high"
       },
       {
         title: "Analise seus gastos em Lazer",
-        description: "Parece que hÃ¡ espaÃ§o para otimizaÃ§Ã£o em assinaturas ou saÃ­das frequentes.",
+        description: "Parece que hÃÂ¡ espaÃÂ§o para otimizaÃÂ§ÃÂ£o em assinaturas ou saÃÂ­das frequentes.",
         priority: "medium"
       }
     ];
